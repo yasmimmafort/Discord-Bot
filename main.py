@@ -1,33 +1,72 @@
-# This example requires the 'message_content' intent.
-
 import discord
 from discord.ext import commands
+
 
 intents = discord.Intents.default()
 intents.message_content = True
 
-client = discord.Client(intents=intents)
 
-lista= []
+client = commands.Bot(command_prefix='!', intents=intents)
+
+
+lista = []
+
+
+@client.event
+async def on_message(message):
+    if message.channel.id != id da sala:
+        return  
+
+    await client.process_commands(message)  
+
 
 @client.event
 async def on_ready():
     print(f'We have logged in as {client.user}')
 
-@client.event
-async def on_message(message):
-    if message.channel.id != 1233778618187120761:
-        return
-    if message.author == client.user:
-        return
-    if messase.content.startswith('!tarefa adicinonar')
-        async def adicionar_tarefas(ctx, *, tarefa)
-            lista.append(tarefa)
-           await ctx.send(f'Tarefa"{tarefa}"adicionada a lista')
+
+@client.group(name='tarefas')
+async def tarefas(ctx):
+    if ctx.invoked_subcommand is None:
+        await ctx.send("Use os subcomandos: \nadicionar - Para adicionar uma tarefa a lista. \nlistar - Para listar todas as tarefas incluidas na lista. \nremover - Para remover uma tarefa da lista ")
+
+
+@tarefas.command(name='adicionar')
+async def adicionar_tarefa(ctx, *, tarefa: str = None):
+    if tarefa:
+        lista.append(tarefa)
+        await ctx.send(f'Tarefa "{tarefa}" adicionada à lista.')
+    else:
+        await ctx.send("Por favor, forneça uma tarefa para adicionar.")
+
+
+@tarefas.command(name='listar')
+async def listar_tarefas(ctx):
+    if lista:
+        tarefas_listadas = "\n".join(f"- {i+1}: {tarefa}" for i, tarefa in enumerate(lista))
+        await ctx.send(f"Tarefas na lista:\n{tarefas_listadas}")
+    else:
+        await ctx.send("A lista de tarefas está vazia.")
+
+
+@tarefas.command(name='remover')
+async def remover_tarefa(ctx, indice: int):
+    if 0 < indice <= len(lista):
+        tarefa_removida = lista.pop(indice - 1) 
+        await ctx.send(f'Tarefa "{tarefa_removida}" foi removida.')
+    else:
+        await ctx.send(f"Item da lista invalido. Forneça um número entre 1 e {len(lista)}.")
+
+
+@client.command(name='juntar')        
+async def juntar_strings(ctx, *args):
+    if args:
+        string_args = [str(arg) for arg in args]
+        resultado = " ".join(args)  
+        await ctx.send(resultado)
+    else:
+        await ctx.send("Forneça pelo menos uma string para juntar.")
+
         
 
-
-
-#id da sala = 1233778618187120761
-
-client.run('MTIzMzc2OTAyNTA2MzA5MjMxNg.GNhFlk.i3IS6wJmuhMecX7wR4mc3m58_vO8-lEoYelsxg')
+client.run('seu token')
