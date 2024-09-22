@@ -179,8 +179,8 @@ client.run('Token do seu bot')
 
 1. Clone o repositório:
     ```bash
-    git clone https://github.com/seu-usuario/seu-repositorio.git
-    cd seu-repositorio
+    git clone https://github.com/yasmimmafort/Discord-Bot.git
+    cd Discord-Bot
     ```
 
 2. Crie um ambiente virtual (recomendado) e ative-o:
@@ -207,5 +207,5 @@ client.run('Token do seu bot')
 
 Execute o bot com o seguinte comando:
 ```bash
-python seu-script.py
+python main.py
 ```
